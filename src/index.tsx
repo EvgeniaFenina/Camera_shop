@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
 import App from './components/app/app';
-import {fetchCameras} from './store/api-actions';
+import {fetchCameras, fetchPromo} from './store/api-actions';
 import {store} from './store/store';
 
+store.dispatch(fetchPromo());
 store.dispatch(fetchCameras());
 
 const root = ReactDOM.createRoot(

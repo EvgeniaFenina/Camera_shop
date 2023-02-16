@@ -16,11 +16,13 @@ export const REQUEST_TIMEOUT = 5000;
 
 export enum NameSpace {
   Cameras = 'CAMERAS',
+  Promo = 'PROMO',
   Notifications = 'NOTIFICATIONS',
 }
 
 export enum APIRoute {
   Cameras = '/cameras',
+  Promo = '/promo'
 }
 
 export enum FetchStatus {
