@@ -42,3 +42,22 @@ export const fetchPromo = createAsyncThunk<Promo, undefined, {
     }
   }
 );
+
+export const fetchCamerasOnPage = createAsyncThunk<Camera[],[number, number], {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchCamerasOnPage',
+  async ([start, end], {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?_start=${start}&_end=${end}`);
+
+      return data;
+    } catch (error) {
+      dispatch(pushNotification({type: 'error', message: 'Failed to get cameras on page'}));
+      throw error;
+    }
+  }
+);
+

@@ -1,5 +1,6 @@
 export enum AppRoute {
   Catalog = '/',
+  CatalogPage = 'catalog/:page',
   Product = '/product/:id',
   Basket = '/basket',
   NotFound = '/*'
@@ -17,6 +18,7 @@ export const REQUEST_TIMEOUT = 5000;
 export enum NameSpace {
   Cameras = 'CAMERAS',
   Promo = 'PROMO',
+  Action = 'ACTION',
   Notifications = 'NOTIFICATIONS',
 }
 
@@ -33,4 +35,8 @@ export enum FetchStatus {
 }
 
 export const MAX_RATING = 5;
+
+export const START_PAGE = 1;
+
+export const COUNT_CAMERAS_ON_PAGE = 9;
 

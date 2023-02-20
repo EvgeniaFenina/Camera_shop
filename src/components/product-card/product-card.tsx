@@ -1,7 +1,6 @@
 import {Camera} from '../../types/camera';
 import {getPriceFormat} from '../../utils';
 import {ReactComponent as IconFullStar} from '../../assets/sprite/icon-full-star.svg';
-// import {nanoid} from 'nanoid';
 import {ReactComponent as IconStar} from '../../assets/sprite/icon-star.svg';
 import {MAX_RATING} from '../../constants';
 
@@ -16,8 +15,8 @@ function ProductCard({product}: ProductCardProps): JSX.Element {
     <div className="product-card">
       <div className="product-card__img">
         <picture>
-          <source type="image/webp" srcSet={`${previewImgWebp}, ${previewImgWebp2x} 2x`} />
-          <img src={previewImg} srcSet={`${previewImg2x} 2x`} width="280" height="240" alt={name} />
+          <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} />
+          <img src={`/${previewImg}`} srcSet={`/${previewImg2x} 2x`} width="280" height="240" alt={name} />
         </picture>
       </div>
       <div className="product-card__info">

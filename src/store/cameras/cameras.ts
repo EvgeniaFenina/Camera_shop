@@ -1,16 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, FetchStatus} from '../../constants';
-import {fetchCameras} from '../api-actions';
+import {fetchCameras, fetchCamerasOnPage} from '../api-actions';
 import {Camera} from '../../types/camera';
 
 type CamerasData = {
   cameras: Camera[];
   camerasLoadingStatus: FetchStatus;
+  camerasOnPage: Camera[];
 };
 
 const initialState: CamerasData = {
   cameras: [],
   camerasLoadingStatus: FetchStatus.IDLE,
+  camerasOnPage: [],
 };
 
 export const cameras = createSlice({
@@ -28,6 +30,9 @@ export const cameras = createSlice({
       })
       .addCase(fetchCameras.rejected, (state) => {
         state.camerasLoadingStatus = FetchStatus.FAILED;
+      })
+      .addCase(fetchCamerasOnPage.fulfilled, (state, action) => {
+        state.camerasOnPage = action.payload;
       });
   }
 });
