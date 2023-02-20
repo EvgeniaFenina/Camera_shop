@@ -2,14 +2,15 @@ import {Camera} from '../../types/camera';
 import {getPriceFormat} from '../../utils';
 import {ReactComponent as IconFullStar} from '../../assets/sprite/icon-full-star.svg';
 import {ReactComponent as IconStar} from '../../assets/sprite/icon-star.svg';
-import {MAX_RATING} from '../../constants';
+import {AppRoute, MAX_RATING} from '../../constants';
+import { generatePath, Link } from 'react-router-dom';
 
 type ProductCardProps = {
   product: Camera;
 }
 
 function ProductCard({product}: ProductCardProps): JSX.Element {
-  const {name, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price} = product;
+  const {id, name, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price} = product;
 
   return (
     <div className="product-card">
@@ -39,8 +40,9 @@ function ProductCard({product}: ProductCardProps): JSX.Element {
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button">Купить
         </button>
-        <a className="btn btn--transparent" href="/#">Подробнее
-        </a>
+        <Link className="btn btn--transparent" to={`${generatePath(AppRoute.Product, {id: String(id)})}`}>
+          Подробнее
+        </Link>
       </div>
     </div>
   );
