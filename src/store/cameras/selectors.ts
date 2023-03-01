@@ -9,3 +9,6 @@ export const getCamerasOnPage = (state:State): Camera[] => state[NameSpace.Camer
 
 export const getCurrentCamera = (state: State): Camera | null => state[NameSpace.Cameras].currentCamera;
 export const getCurrentCameraLoadingStatus = (state: State): FetchStatus => state[NameSpace.Cameras].currentCameraLoadingStatus;
+
+export const getSimilarCameras = (state: State): Camera[] => state[NameSpace.Cameras].similarCameras;
+export const getSimilarCamerasLoadingStatus = (state: State): FetchStatus => state[NameSpace.Cameras].similarCamerasLoadingStatus;

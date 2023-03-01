@@ -1,19 +1,21 @@
+import cn from 'classnames';
 import {Camera} from '../../types/camera';
 import {getPriceFormat} from '../../utils';
 import {ReactComponent as IconFullStar} from '../../assets/sprite/icon-full-star.svg';
 import {ReactComponent as IconStar} from '../../assets/sprite/icon-star.svg';
 import {AppRoute, MAX_RATING} from '../../constants';
-import { generatePath, Link } from 'react-router-dom';
+import {generatePath, Link} from 'react-router-dom';
 
 type ProductCardProps = {
   product: Camera;
+  type?: 'similar';
 }
 
-function ProductCard({product}: ProductCardProps): JSX.Element {
+function ProductCard({product, type}: ProductCardProps): JSX.Element {
   const {id, name, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price} = product;
 
   return (
-    <div className="product-card">
+    <div className={cn('product-card', type && 'is-active')}>
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`/${previewImgWebp}, /${previewImgWebp2x} 2x`} />

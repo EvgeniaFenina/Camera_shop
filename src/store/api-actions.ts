@@ -86,4 +86,22 @@ export const fetchCurrentCamera = createAsyncThunk<Camera, string, {
   }
 );
 
+export const fetchSimilarCameras = createAsyncThunk<Camera[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchSimilarCameras',
+  async (cameraId, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}/${cameraId}/similar`);
+
+      return data;
+    } catch (error) {
+      dispatch(pushNotification({type: 'error', message: 'Failed to get cameras'}));
+      throw error;
+    }
+  }
+);
+
 

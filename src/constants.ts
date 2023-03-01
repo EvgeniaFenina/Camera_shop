@@ -40,3 +40,5 @@ export const START_PAGE = 1;
 
 export const COUNT_CAMERAS_ON_PAGE = 9;
 
+export const MAX_SLIDER_PRODUCT = 3;
+

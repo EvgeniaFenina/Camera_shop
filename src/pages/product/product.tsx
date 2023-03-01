@@ -6,7 +6,7 @@ import LoadingSpinner from '../../components/loading-spinner/loading-spinner';
 import ReviewFrorm from '../../components/review-form/review-form';
 import SimilarSlider from '../../components/similar-slider/similar-slider';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchCurrentCamera} from '../../store/api-actions';
+import {fetchCurrentCamera, fetchSimilarCameras} from '../../store/api-actions';
 import {getCurrentCamera} from '../../store/cameras/selectors';
 import {getPriceFormat} from '../../utils';
 import {ReactComponent as IconFullStar} from '../../assets/sprite/icon-full-star.svg';
@@ -22,6 +22,7 @@ function ProductPage(): JSX.Element {
   useEffect(() => {
     if (id) {
       dispatch(fetchCurrentCamera(id));
+      dispatch(fetchSimilarCameras(id));
     }
   }, [dispatch, id]);
 
