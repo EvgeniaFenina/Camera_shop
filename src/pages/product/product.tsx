@@ -6,23 +6,27 @@ import LoadingSpinner from '../../components/loading-spinner/loading-spinner';
 import ReviewFrorm from '../../components/review-form/review-form';
 import SimilarSlider from '../../components/similar-slider/similar-slider';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchCurrentCamera, fetchSimilarCameras} from '../../store/api-actions';
+import {fetchCurrentCamera, fetchReviews, fetchSimilarCameras} from '../../store/api-actions';
 import {getCurrentCamera} from '../../store/cameras/selectors';
-import {getPriceFormat} from '../../utils';
+import {getPriceFormat, getSortReviews} from '../../utils';
 import {ReactComponent as IconFullStar} from '../../assets/sprite/icon-full-star.svg';
 import {ReactComponent as IconStar} from '../../assets/sprite/icon-star.svg';
 import {MAX_RATING} from '../../constants';
 import ProductTabs from '../../components/product-tabs/product-tabs';
+import {getReviews} from '../../store/reviews/selectors';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const currentProduct = useAppSelector(getCurrentCamera);
+  const reviews = useAppSelector(getReviews);
+  const sortedReviews = reviews.slice().sort(getSortReviews);
 
   useEffect(() => {
     if (id) {
       dispatch(fetchCurrentCamera(id));
       dispatch(fetchSimilarCameras(id));
+      dispatch(fetchReviews(id));
     }
   }, [dispatch, id]);
 
@@ -71,7 +75,7 @@ function ProductPage(): JSX.Element {
             </section>
           </div>
           <SimilarSlider />
-          <ReviewFrorm />
+          <ReviewFrorm reviews={sortedReviews} key={id} />
         </div>
       </main>
       <a className="up-btn" href="#header">

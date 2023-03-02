@@ -7,6 +7,7 @@ import {pushNotification} from './notifications/notifications';
 import {Promo} from '../types/promo.js';
 import {StatusCodes} from 'http-status-codes';
 import {redirectToRoute} from './action';
+import {Review} from '../types/review.js';
 
 
 export const fetchCameras = createAsyncThunk<Camera[], undefined, {
@@ -104,4 +105,21 @@ export const fetchSimilarCameras = createAsyncThunk<Camera[], string, {
   }
 );
 
+export const fetchReviews = createAsyncThunk<Review[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchReviews',
+  async (cameraId, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<Review[]>(`${APIRoute.Cameras}/${cameraId}/reviews`);
+
+      return data;
+    } catch (error) {
+      dispatch(pushNotification({type: 'error', message: 'Failed to get reviews'}));
+      throw error;
+    }
+  }
+);
 

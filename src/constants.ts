@@ -19,12 +19,14 @@ export enum NameSpace {
   Cameras = 'CAMERAS',
   Promo = 'PROMO',
   Action = 'ACTION',
+  Reviews = 'REVIEWS',
   Notifications = 'NOTIFICATIONS',
 }
 
 export enum APIRoute {
   Cameras = '/cameras',
-  Promo = '/promo'
+  Promo = '/promo',
+  Reviews = '/reviews'
 }
 
 export enum FetchStatus {
@@ -41,4 +43,6 @@ export const START_PAGE = 1;
 export const COUNT_CAMERAS_ON_PAGE = 9;
 
 export const MAX_SLIDER_PRODUCT = 3;
+
+export const MAX_REVIEWS_ON_PAGE = 3;
 

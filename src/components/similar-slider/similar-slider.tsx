@@ -16,6 +16,7 @@ function SimilarSlider(): JSX.Element {
 
   useEffect(() => {
     setSimilarOnPage([...similarProducts.slice(productNumber, MAX_SLIDER_PRODUCT + productNumber)]);
+
     if (productNumber === 0) {
       setActivePreviousButton(false);
     } else {
