@@ -7,7 +7,7 @@ import {pushNotification} from './notifications/notifications';
 import {Promo} from '../types/promo.js';
 import {StatusCodes} from 'http-status-codes';
 import {redirectToRoute} from './action';
-import {Review} from '../types/review.js';
+import {Review, PostReview} from '../types/review.js';
 
 
 export const fetchCameras = createAsyncThunk<Camera[], undefined, {
@@ -123,3 +123,20 @@ export const fetchReviews = createAsyncThunk<Review[], string, {
   }
 );
 
+export const postReview = createAsyncThunk<Review[], PostReview, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'app/PostReview',
+  async ({cameraId}, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.post<Review[]>(`${APIRoute.Reviews}/${cameraId}`);
+
+      return data;
+    } catch (error) {
+      dispatch(pushNotification({type: 'error', message: 'Failed to send review'}));
+      throw error;
+    }
+  }
+);

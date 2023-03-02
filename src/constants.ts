@@ -20,6 +20,7 @@ export enum NameSpace {
   Promo = 'PROMO',
   Action = 'ACTION',
   Reviews = 'REVIEWS',
+  Modal = 'Modal',
   Notifications = 'NOTIFICATIONS',
 }
 
@@ -45,4 +46,6 @@ export const COUNT_CAMERAS_ON_PAGE = 9;
 export const MAX_SLIDER_PRODUCT = 3;
 
 export const MAX_REVIEWS_ON_PAGE = 3;
+
+export const STOP_SCROLL_CLASS = 'scroll-lock';
 

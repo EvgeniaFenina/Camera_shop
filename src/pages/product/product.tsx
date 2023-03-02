@@ -14,6 +14,8 @@ import {ReactComponent as IconStar} from '../../assets/sprite/icon-star.svg';
 import {MAX_RATING} from '../../constants';
 import ProductTabs from '../../components/product-tabs/product-tabs';
 import {getReviews} from '../../store/reviews/selectors';
+import ModalAddReview from '../../components/modal-add-review/modal-add-review';
+import {getAddReviewModalStatus} from '../../store/modal/selectors';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -21,6 +23,8 @@ function ProductPage(): JSX.Element {
   const currentProduct = useAppSelector(getCurrentCamera);
   const reviews = useAppSelector(getReviews);
   const sortedReviews = reviews.slice().sort(getSortReviews);
+  const isModalActive = useAppSelector(getAddReviewModalStatus);
+
 
   useEffect(() => {
     if (id) {
@@ -76,6 +80,7 @@ function ProductPage(): JSX.Element {
           </div>
           <SimilarSlider />
           <ReviewFrorm reviews={sortedReviews} key={id} />
+          {isModalActive && <ModalAddReview cameraId={currentProduct.id} />}
         </div>
       </main>
       <a className="up-btn" href="#header">

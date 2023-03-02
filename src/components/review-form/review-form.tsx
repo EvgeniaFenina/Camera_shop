@@ -1,13 +1,16 @@
 import {useEffect, useState} from 'react';
 import {MAX_REVIEWS_ON_PAGE} from '../../constants';
+import {openAddReviewModal} from '../../store/modal/modal';
 import {Review} from '../../types/review';
 import ReviewItem from '../review-item/review-item';
+import {useAppDispatch} from '../../hooks';
 
 type ReviewsProps = {
   reviews: Review[];
 }
 
 function ReviewFrorm({reviews}: ReviewsProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const [reviewNumber, setReviewNumber] = useState(0);
 
   const [isActiveButton, setActiveButton] = useState(true);
@@ -24,9 +27,14 @@ function ReviewFrorm({reviews}: ReviewsProps): JSX.Element {
     }
   },[reviewNumber, reviews]);
 
-  const handleClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLoadReviwClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     setReviewNumber(reviewNumber + MAX_REVIEWS_ON_PAGE);
+  };
+
+  const handleAddReviewClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    dispatch(openAddReviewModal());
   };
 
   return (
@@ -35,7 +43,13 @@ function ReviewFrorm({reviews}: ReviewsProps): JSX.Element {
         <div className="container">
           <div className="page-content__headed">
             <h2 className="title title--h3">Отзывы</h2>
-            <button className="btn" type="button">Оставить свой отзыв</button>
+            <button
+              className="btn"
+              type="button"
+              onClick={handleAddReviewClick}
+            >
+              Оставить свой отзыв
+            </button>
           </div>
           <ul className="review-block__list">
             {reviewsOnPage.map((review) => <ReviewItem comment={review} key={review.id} />)}
@@ -45,7 +59,7 @@ function ReviewFrorm({reviews}: ReviewsProps): JSX.Element {
             <button
               className="btn btn--purple"
               type="button"
-              onClick={handleClick}
+              onClick={handleLoadReviwClick}
               disabled={!isActiveButton}
             >
               Показать больше отзывов
