@@ -11,10 +11,14 @@ import {getCurrentPage} from '../../store/app/selectors';
 import {getCamerasOnPage} from '../../store/cameras/selectors';
 import {COUNT_CAMERAS_ON_PAGE} from '../../constants';
 import {fetchCamerasOnPage} from '../../store/api-actions';
+import {getAddCartModalStatus} from '../../store/modal/selectors';
+import ModalAddCart from '../../components/modal-add-cart/modal-add-cart';
 
 function CatalogPage(): JSX.Element {
   const camerasOnPage = useAppSelector(getCamerasOnPage);
   const currentPage = useAppSelector(getCurrentPage);
+
+  const isModalActive = useAppSelector(getAddCartModalStatus);
 
   const dispatch = useAppDispatch();
 
@@ -47,6 +51,7 @@ function CatalogPage(): JSX.Element {
             </div>
           </section>
         </div>
+        {isModalActive && <ModalAddCart />}
       </main>
     </Layout>
   );

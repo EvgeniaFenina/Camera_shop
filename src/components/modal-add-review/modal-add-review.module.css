@@ -1,0 +1,5 @@
+#reviewForm__borderError {
+  outline: none;
+  border: 2px solid #ed6041;
+  border-radius: 5px;
+ }

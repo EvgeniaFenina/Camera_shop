@@ -1298,7 +1298,7 @@ button,
   font-size: 14px;
   line-height: 18px;
   color: #ed6041;
-  opacity: 0;
+  /* opacity: 0; */
   -webkit-transition: opacity 0.3s ease;
   -o-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease;
@@ -1320,20 +1320,20 @@ button,
   transition: opacity 0.3s ease;
 }
 
-.custom-input.is-invalid input,
-.custom-textarea.is-invalid input {
+.custom-input .is-invalid input,
+.custom-textarea .is-invalid input {
   border: 2px solid #ed6041;
 }
 
-.custom-input.is-invalid input:focus,
-.custom-input.is-invalid input:hover,
-.custom-textarea.is-invalid input:focus,
-.custom-textarea.is-invalid input:hover {
+.custom-input .is-invalid input:focus,
+.custom-input .is-invalid input:hover,
+.custom-textarea .is-invalid input:focus,
+.custom-textarea .is-invalid input:hover {
   border: 2px solid rgba(237, 96, 65, 0.8);
 }
 
-.custom-input.is-invalid .custom-input__error,
-.custom-textarea.is-invalid .custom-input__error {
+.custom-input .is-invalid .custom-input__error,
+.custom-textarea .is-invalid .custom-input__error {
   opacity: 1;
 }
 
@@ -2309,7 +2309,7 @@ button,
   font-size: 14px;
   line-height: 18px;
   color: #ed6041;
-  opacity: 0;
+  /* opacity: 0; */
 }
 
 .rate__group:not(:checked) > label {

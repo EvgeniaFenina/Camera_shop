@@ -15,7 +15,11 @@ import {MAX_RATING} from '../../constants';
 import ProductTabs from '../../components/product-tabs/product-tabs';
 import {getReviews} from '../../store/reviews/selectors';
 import ModalAddReview from '../../components/modal-add-review/modal-add-review';
-import {getAddReviewModalStatus} from '../../store/modal/selectors';
+import {getAddCartModalStatus, getAddReviewModalStatus, getReviewSuccessModalStatus} from '../../store/modal/selectors';
+import ModalAddReviewSuccess from '../../components/modal-review-success/modal-review-success';
+import ModalAddCart from '../../components/modal-add-cart/modal-add-cart';
+import React from 'react';
+import {openAddCartModal, setActiveCamera} from '../../store/modal/modal';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -23,7 +27,9 @@ function ProductPage(): JSX.Element {
   const currentProduct = useAppSelector(getCurrentCamera);
   const reviews = useAppSelector(getReviews);
   const sortedReviews = reviews.slice().sort(getSortReviews);
-  const isModalActive = useAppSelector(getAddReviewModalStatus);
+  const isModalAddReviewActive = useAppSelector(getAddReviewModalStatus);
+  const isSuccessModalActive = useAppSelector(getReviewSuccessModalStatus);
+  const isModalAddCardActive = useAppSelector(getAddCartModalStatus);
 
 
   useEffect(() => {
@@ -38,6 +44,14 @@ function ProductPage(): JSX.Element {
     return <LoadingSpinner />;
   }
 
+  const buttonRef = React.createRef<HTMLButtonElement>();
+
+  const handleToBuyButtonClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    buttonRef.current?.blur();
+    dispatch(setActiveCamera({product: currentProduct}));
+    dispatch(openAddCartModal());
+  };
 
   const {name, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price} = currentProduct;
 
@@ -68,7 +82,12 @@ function ProductPage(): JSX.Element {
                     <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
                   </div>
                   <p className="product__price"><span className="visually-hidden">Цена:</span>{getPriceFormat(price)} ₽</p>
-                  <button className="btn btn--purple" type="button">
+                  <button
+                    className="btn btn--purple"
+                    type="button"
+                    onClick={handleToBuyButtonClick}
+                    ref={buttonRef}
+                  >
                     <svg width="24" height="16" aria-hidden="true">
                       <use xlinkHref="#icon-add-basket"></use>
                     </svg>Добавить в корзину
@@ -80,7 +99,9 @@ function ProductPage(): JSX.Element {
           </div>
           <SimilarSlider />
           <ReviewFrorm reviews={sortedReviews} key={id} />
-          {isModalActive && <ModalAddReview cameraId={currentProduct.id} />}
+          {isModalAddReviewActive && <ModalAddReview cameraId={currentProduct.id} />}
+          {isSuccessModalActive && <ModalAddReviewSuccess cameraId={`${currentProduct.id}`} />}
+          {isModalAddCardActive && <ModalAddCart />}
         </div>
       </main>
       <a className="up-btn" href="#header">

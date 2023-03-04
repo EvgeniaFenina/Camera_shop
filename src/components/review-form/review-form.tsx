@@ -4,6 +4,7 @@ import {openAddReviewModal} from '../../store/modal/modal';
 import {Review} from '../../types/review';
 import ReviewItem from '../review-item/review-item';
 import {useAppDispatch} from '../../hooks';
+import React from 'react';
 
 type ReviewsProps = {
   reviews: Review[];
@@ -11,6 +12,9 @@ type ReviewsProps = {
 
 function ReviewFrorm({reviews}: ReviewsProps): JSX.Element {
   const dispatch = useAppDispatch();
+
+  const buttonRef = React.createRef<HTMLButtonElement>();
+
   const [reviewNumber, setReviewNumber] = useState(0);
 
   const [isActiveButton, setActiveButton] = useState(true);
@@ -34,6 +38,7 @@ function ReviewFrorm({reviews}: ReviewsProps): JSX.Element {
 
   const handleAddReviewClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
+    buttonRef.current?.blur();
     dispatch(openAddReviewModal());
   };
 
@@ -47,6 +52,7 @@ function ReviewFrorm({reviews}: ReviewsProps): JSX.Element {
               className="btn"
               type="button"
               onClick={handleAddReviewClick}
+              ref={buttonRef}
             >
               Оставить свой отзыв
             </button>

@@ -5,6 +5,9 @@ import {ReactComponent as IconFullStar} from '../../assets/sprite/icon-full-star
 import {ReactComponent as IconStar} from '../../assets/sprite/icon-star.svg';
 import {AppRoute, MAX_RATING} from '../../constants';
 import {generatePath, Link} from 'react-router-dom';
+import {useAppDispatch} from '../../hooks';
+import {openAddCartModal, setActiveCamera} from '../../store/modal/modal';
+import React from 'react';
 
 type ProductCardProps = {
   product: Camera;
@@ -12,7 +15,18 @@ type ProductCardProps = {
 }
 
 function ProductCard({product, type}: ProductCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const {id, name, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price} = product;
+
+  const buttonRef = React.createRef<HTMLButtonElement>();
+
+  const handleToBuyButtonClick = (evt: React.MouseEvent<HTMLButtonElement>) => {
+    evt.preventDefault();
+    buttonRef.current?.blur();
+    dispatch(setActiveCamera({product}));
+    dispatch(openAddCartModal());
+  };
 
   return (
     <div className={cn('product-card', type && 'is-active')}>
@@ -40,7 +54,13 @@ function ProductCard({product, type}: ProductCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
+        <button
+          className="btn btn--purple product-card__btn"
+          type="button"
+          onClick={handleToBuyButtonClick}
+          ref={buttonRef}
+        >
+          Купить
         </button>
         <Link className="btn btn--transparent" to={`${generatePath(AppRoute.Product, {id: String(id)})}`}>
           Подробнее
