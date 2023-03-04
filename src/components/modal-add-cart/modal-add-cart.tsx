@@ -1,7 +1,8 @@
 import cn from 'classnames';
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {STOP_SCROLL_CLASS} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks';
+import useOnClickOutside from '../../hooks/use-on-click-outside';
 import {clearActiveCamera, closeAddCartModal} from '../../store/modal/modal';
 import {getActiveCamera, getAddCartModalStatus} from '../../store/modal/selectors';
 import {getPriceFormat, isEscapeKey} from '../../utils';
@@ -38,6 +39,10 @@ function ModalAddCart(): JSX.Element {
     dispatch(closeModal);
   };
 
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, () => closeModal());
+
   if (!camera) {
     return (<p>Something went wrong</p>);
   }
@@ -48,6 +53,7 @@ function ModalAddCart(): JSX.Element {
     <div
       className={cn('modal', isActive && 'is-active')}
       onClick={handleCloseModalClick}
+      ref={ref}
     >
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>

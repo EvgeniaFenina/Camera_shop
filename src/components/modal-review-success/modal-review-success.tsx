@@ -1,6 +1,7 @@
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {STOP_SCROLL_CLASS} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks';
+import useOnClickOutside from '../../hooks/use-on-click-outside';
 import {fetchReviews} from '../../store/api-actions';
 import {closeReviewSuccessModal} from '../../store/modal/modal';
 import {getReviewSuccessModalStatus} from '../../store/modal/selectors';
@@ -46,8 +47,12 @@ function ModalAddReviewSuccess({cameraId}: ModalAddReviewSuccessProps): JSX.Elem
     dispatch(fetchReviews(cameraId));
   };
 
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, () => closeModal());
+
   return (
-    <div className="modal is-active modal--narrow">
+    <div className="modal is-active modal--narrow" ref={ref}>
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content">

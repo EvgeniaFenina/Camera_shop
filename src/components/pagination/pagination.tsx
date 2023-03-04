@@ -28,7 +28,7 @@ function Pagination(): JSX.Element {
           <li className="pagination__item">
             <Link
               className="pagination__link pagination__link--text"
-              to={`${AppRoute.Catalog}${generatePath(AppRoute.CatalogPage, {page: String(prevPage)})}`}
+              to={`${AppRoute.Main}${generatePath(AppRoute.Catalog, {page: String(prevPage)})}`}
               onClick={() => handleClick(prevPage)}
             >
               Назад
@@ -39,7 +39,7 @@ function Pagination(): JSX.Element {
           <li className="pagination__item" key={page}>
             <Link
               className={cn('pagination__link', page === currentPage && 'pagination__link--active')}
-              to={`${AppRoute.Catalog}${generatePath(AppRoute.CatalogPage, {page: String(page)})}`}
+              to={`${AppRoute.Main}${generatePath(AppRoute.Catalog, {page: String(page)})}`}
               onClick={() => handleClick(page)}
             >
               {page}
@@ -50,7 +50,7 @@ function Pagination(): JSX.Element {
           <li className="pagination__item">
             <Link
               className="pagination__link pagination__link--text"
-              to={`${AppRoute.Catalog}${generatePath(AppRoute.CatalogPage, {page: String(nextPage)})}`}
+              to={`${AppRoute.Main}${generatePath(AppRoute.Catalog, {page: String(nextPage)})}`}
               onClick={() => handleClick(nextPage)}
             >
               Далее

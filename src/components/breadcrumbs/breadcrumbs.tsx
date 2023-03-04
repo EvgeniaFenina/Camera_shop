@@ -15,7 +15,7 @@ function BreadCrumbs({product}: BreadCrumbsProps): JSX.Element {
       <div className="container">
         <ul className="breadcrumbs__list">
           <li className="breadcrumbs__item">
-            <Link className="breadcrumbs__link" to={AppRoute.Catalog}>Главная
+            <Link className="breadcrumbs__link" to={AppRoute.Main}>Главная
               <svg width="5" height="8" aria-hidden="true">
                 <use xlinkHref="#icon-arrow-mini"></use>
               </svg>
@@ -32,7 +32,7 @@ function BreadCrumbs({product}: BreadCrumbsProps): JSX.Element {
           {product &&
             <>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={`${AppRoute.Catalog}${generatePath(AppRoute.CatalogPage, {page: String(currentPage)})}`}>
+                <Link className="breadcrumbs__link" to={`${AppRoute.Main}${generatePath(AppRoute.Catalog, {page: String(currentPage)})}`}>
                     Каталог
                   <svg width="5" height="8" aria-hidden="true">
                     <use xlinkHref="#icon-arrow-mini"></use>

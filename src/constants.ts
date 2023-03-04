@@ -1,6 +1,6 @@
 export enum AppRoute {
-  Catalog = '/',
-  CatalogPage = 'catalog/:page',
+  Main = '/',
+  Catalog = 'catalog/:page',
   Product = '/product/:id',
   Basket = '/basket',
   NotFound = '/*'
@@ -48,4 +48,7 @@ export const MAX_SLIDER_PRODUCT = 3;
 export const MAX_REVIEWS_ON_PAGE = 3;
 
 export const STOP_SCROLL_CLASS = 'scroll-lock';
+
+export const DEFAUTT_DURATION = 4000;
+
 

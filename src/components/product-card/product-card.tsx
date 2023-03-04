@@ -8,6 +8,7 @@ import {generatePath, Link} from 'react-router-dom';
 import {useAppDispatch} from '../../hooks';
 import {openAddCartModal, setActiveCamera} from '../../store/modal/modal';
 import React from 'react';
+import {nanoid} from 'nanoid';
 
 type ProductCardProps = {
   product: Camera;
@@ -18,6 +19,9 @@ function ProductCard({product, type}: ProductCardProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const {id, name, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price} = product;
+
+  const fullStars = Array(product.rating).fill(<IconFullStar />);
+  const emptyStars = Array(MAX_RATING - product.rating).fill(<IconStar />);
 
   const buttonRef = React.createRef<HTMLButtonElement>();
 
@@ -38,12 +42,14 @@ function ProductCard({product, type}: ProductCardProps): JSX.Element {
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          {Array(rating).fill(
-            <IconFullStar width="17" height="16" aria-hidden="true" />
-          )}
-          {Array(MAX_RATING - rating).fill(
-            <IconStar width="17" height="16" aria-hidden="true" />
-          )}
+          {fullStars.map(() => {
+            const key = nanoid();
+            return <IconFullStar width="17" height="16" aria-hidden="true" key={key} />;
+          })}
+          {emptyStars.map(() => {
+            const key = nanoid();
+            return <IconStar width="17" height="16" aria-hidden="true" key={key} />;
+          })}
           <p className="visually-hidden">Рейтинг: {rating}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
         </div>

@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {STOP_SCROLL_CLASS} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {closeAddReviewModal, openReviewSuccessModal} from '../../store/modal/modal';
@@ -9,6 +9,7 @@ import {postReview} from '../../store/api-actions';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {isEscapeKey} from '../../utils';
+import useOnClickOutside from '../../hooks/use-on-click-outside';
 
 type FormValues = {
   cameraId: number;
@@ -74,6 +75,10 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
     dispatch(openReviewSuccessModal());
   };
 
+  const ref = useRef(null);
+
+  useOnClickOutside(ref, () => closeModal());
+
   return (
     <div className={cn('modal', isActive && 'is-active')}>
       <div className="modal__wrapper">
@@ -86,6 +91,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
               action="#"
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onSubmit={handleSubmit(onSubmit)}
+              ref={ref}
             >
               <div className="form-review__rate">
                 <fieldset className="rate form-review__item">

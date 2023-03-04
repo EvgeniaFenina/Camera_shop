@@ -4,16 +4,17 @@ import CatalogPage from '../../pages/catalog/catalog';
 import ProductPage from '../../pages/product/product';
 import BasketPage from '../../pages/basket/basket';
 import {HelmetProvider} from 'react-helmet-async';
+import NotFoundPage from '../../pages/not-found/not-found';
 
 function App(): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route path={AppRoute.Catalog}>
+          <Route path={AppRoute.Main}>
             <Route index element={<CatalogPage />} />
             <Route
-              path={AppRoute.CatalogPage}
+              path={AppRoute.Catalog}
               element={<CatalogPage />}
             />
             <Route
@@ -23,6 +24,10 @@ function App(): JSX.Element {
             <Route
               path={AppRoute.Product}
               element={<ProductPage />}
+            />
+            <Route
+              path="*"
+              element={<NotFoundPage />}
             />
           </Route>
         </Routes>

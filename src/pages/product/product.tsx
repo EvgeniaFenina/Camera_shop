@@ -20,6 +20,7 @@ import ModalAddReviewSuccess from '../../components/modal-review-success/modal-r
 import ModalAddCart from '../../components/modal-add-cart/modal-add-cart';
 import React from 'react';
 import {openAddCartModal, setActiveCamera} from '../../store/modal/modal';
+import {nanoid} from 'nanoid';
 
 function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -30,7 +31,6 @@ function ProductPage(): JSX.Element {
   const isModalAddReviewActive = useAppSelector(getAddReviewModalStatus);
   const isSuccessModalActive = useAppSelector(getReviewSuccessModalStatus);
   const isModalAddCardActive = useAppSelector(getAddCartModalStatus);
-
 
   useEffect(() => {
     if (id) {
@@ -55,6 +55,9 @@ function ProductPage(): JSX.Element {
 
   const {name, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price} = currentProduct;
 
+  const fullStars = Array(currentProduct.rating).fill(<IconFullStar />);
+  const emptyStars = Array(MAX_RATING - currentProduct.rating).fill(<IconStar />);
+
   return (
     <Layout>
       <main>
@@ -72,12 +75,14 @@ function ProductPage(): JSX.Element {
                 <div className="product__content">
                   <h1 className="title title--h3">{name}</h1>
                   <div className="rate product__rate">
-                    {Array(rating).fill(
-                      <IconFullStar width="17" height="16" aria-hidden="true" />
-                    )}
-                    {Array(MAX_RATING - rating).fill(
-                      <IconStar width="17" height="16" aria-hidden="true" />
-                    )}
+                    {fullStars.map(() => {
+                      const key = nanoid();
+                      return <IconFullStar width="17" height="16" aria-hidden="true" key={key} />;
+                    })}
+                    {emptyStars.map(() => {
+                      const key = nanoid();
+                      return <IconStar width="17" height="16" aria-hidden="true" key={key} />;
+                    })}
                     <p className="visually-hidden">Рейтинг: {rating}</p>
                     <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
                   </div>

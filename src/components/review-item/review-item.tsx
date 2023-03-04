@@ -3,6 +3,7 @@ import {ReactComponent as IconFullStar} from '../../assets/sprite/icon-full-star
 import {ReactComponent as IconStar} from '../../assets/sprite/icon-star.svg';
 import {MAX_RATING} from '../../constants';
 import {getFormatDate} from '../../utils';
+import {nanoid} from 'nanoid';
 
 type ReviewItemProps = {
   comment: Review;
@@ -11,6 +12,9 @@ type ReviewItemProps = {
 function ReviewItem({comment}: ReviewItemProps): JSX.Element {
   const {userName, advantage, disadvantage, review, rating, createAt} = comment;
 
+  const fullStars = Array(comment.rating).fill(<IconFullStar />);
+  const emptyStars = Array(MAX_RATING - comment.rating).fill(<IconStar />);
+
   return (
     <li className="review-card">
       <div className="review-card__head">
@@ -18,12 +22,14 @@ function ReviewItem({comment}: ReviewItemProps): JSX.Element {
         <time className="review-card__data" dateTime="2022-04-13">{getFormatDate(createAt)}</time>
       </div>
       <div className="rate review-card__rate">
-        {Array(rating).fill(
-          <IconFullStar width="17" height="16" aria-hidden="true" />
-        )}
-        {Array(MAX_RATING - rating).fill(
-          <IconStar width="17" height="16" aria-hidden="true" />
-        )}
+        {fullStars.map(() => {
+          const key = nanoid();
+          return <IconFullStar width="17" height="16" aria-hidden="true" key={key} />;
+        })}
+        {emptyStars.map(() => {
+          const key = nanoid();
+          return <IconStar width="17" height="16" aria-hidden="true" key={key} />;
+        })}
         <p className="visually-hidden">Оценка: {rating}</p>
       </div>
       <ul className="review-card__list">
