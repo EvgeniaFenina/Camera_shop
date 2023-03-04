@@ -115,7 +115,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
                   </div>
                   {errors?.rating && <p className="rate__message">Нужно оценить товар</p>}
                 </fieldset>
-                <div className="custom-input form-review__item">
+                <div className={cn('custom-input', errors?.userName && 'is-invalid', 'form-review__item')}>
                   <label>
                     <span className="custom-input__label">Ваше имя
                       <svg width="9" height="9" aria-hidden="true">
@@ -125,13 +125,12 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
                     <input
                       type="text"
                       placeholder="Введите ваше имя"
-                      aria-invalid={errors.userName ? 'true' : 'false'}
                       {...register('userName')}
                     />
                   </label>
                   {errors?.userName && <p className="custom-input__error">Нужно указать имя</p>}
                 </div>
-                <div className="custom-input form-review__item">
+                <div className={cn('custom-input', errors?.advantage && 'is-invalid', 'form-review__item')}>
                   <label>
                     <span className="custom-input__label">Достоинства
                       <svg width="9" height="9" aria-hidden="true">
@@ -146,7 +145,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
                   </label>
                   {errors?.advantage && <p className="custom-input__error">Нужно указать достоинства</p>}
                 </div>
-                <div className="custom-input form-review__item">
+                <div className={cn('custom-input', errors?.disadvantage && 'is-invalid', 'form-review__item')}>
                   <label>
                     <span className="custom-input__label">Недостатки
                       <svg width="9" height="9" aria-hidden="true">
@@ -161,7 +160,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
                   </label>
                   {errors?.disadvantage && <p className="custom-input__error">Нужно указать недостатки</p>}
                 </div>
-                <div className="custom-textarea form-review__item">
+                <div className={cn('custom-textarea', errors?.disadvantage && 'is-invalid', 'form-review__item')}>
                   <label>
                     <span className="custom-textarea__label">Комментарий
                       <svg width="9" height="9" aria-hidden="true">
