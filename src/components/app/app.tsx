@@ -1,15 +1,17 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../constants';
 import CatalogPage from '../../pages/catalog/catalog';
 import ProductPage from '../../pages/product/product';
 import BasketPage from '../../pages/basket/basket';
 import {HelmetProvider} from 'react-helmet-async';
 import NotFoundPage from '../../pages/not-found/not-found';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route path={AppRoute.Main}>
             <Route index element={<CatalogPage />} />
@@ -31,7 +33,7 @@ function App(): JSX.Element {
             />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }

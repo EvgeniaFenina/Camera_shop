@@ -7,7 +7,7 @@ import ReviewFrorm from '../../components/review-form/review-form';
 import SimilarSlider from '../../components/similar-slider/similar-slider';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchCurrentCamera, fetchReviews, fetchSimilarCameras} from '../../store/api-actions';
-import {getCurrentCamera} from '../../store/cameras/selectors';
+import {getCurrentCamera, getCurrentCameraStatus} from '../../store/cameras/selectors';
 import {getPriceFormat, getSortReviews} from '../../utils';
 import {ReactComponent as IconFullStar} from '../../assets/sprite/icon-full-star.svg';
 import {ReactComponent as IconStar} from '../../assets/sprite/icon-star.svg';
@@ -26,6 +26,7 @@ function ProductPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const {id} = useParams();
   const currentProduct = useAppSelector(getCurrentCamera);
+  const currentProductLoadingStatus = useAppSelector(getCurrentCameraStatus);
   const reviews = useAppSelector(getReviews);
   const sortedReviews = reviews.slice().sort(getSortReviews);
   const isModalAddReviewActive = useAppSelector(getAddReviewModalStatus);
@@ -34,13 +35,14 @@ function ProductPage(): JSX.Element {
 
   useEffect(() => {
     if (id) {
+      window.scrollTo(0, 0);
       dispatch(fetchCurrentCamera(id));
       dispatch(fetchSimilarCameras(id));
       dispatch(fetchReviews(id));
     }
   }, [dispatch, id]);
 
-  if (!currentProduct) {
+  if (!currentProduct || currentProductLoadingStatus.isLoading) {
     return <LoadingSpinner />;
   }
 

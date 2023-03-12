@@ -10,15 +10,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {isEscapeKey} from '../../utils';
 import useOnClickOutside from '../../hooks/use-on-click-outside';
-
-type FormValues = {
-  cameraId: number;
-  userName: string;
-  advantage: string;
-  disadvantage: string;
-  review: string;
-  rating: number;
-}
+import { PostReview } from '../../types/review';
 
 type ModalAddReviewProps = {
   cameraId: number;
@@ -36,7 +28,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
   const dispatch = useAppDispatch();
   const isActive = useAppSelector(getAddReviewModalStatus);
 
-  const {register, handleSubmit, formState: {errors}} = useForm<FormValues>({
+  const {register, handleSubmit, formState: {errors}} = useForm<PostReview>({
     resolver: yupResolver(schema)
   });
 
@@ -67,7 +59,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
     closeModal();
   };
 
-  const onSubmit: SubmitHandler<FormValues> = (values) => {
+  const onSubmit: SubmitHandler<PostReview> = (values) => {
     const payload = {...values, cameraId: cameraId};
 
     dispatch(postReview({...payload}));
