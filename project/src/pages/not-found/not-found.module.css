@@ -1,0 +1,12 @@
+.section {
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.title {
+  font-family: rubik,arial,sans-serif;
+  font-size: 200%;
+  color: #7575e2;
+  margin-top: 20%;
+};
