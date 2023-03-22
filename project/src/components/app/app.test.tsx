@@ -84,28 +84,28 @@ describe('Application Routing:', () => {
     expect(screen.getByText(/Оформить заказ/i)).toBeInTheDocument();
   });
 
-  // it('should render main screen when user navigate to "/"', () => {
-  //   history.push(AppRoute.Main);
+  it('should render main screen when user navigate to "/"', () => {
+    history.push(AppRoute.Main);
 
-  //   render(fakeApp);
+    render(fakeApp);
 
-  //   expect(screen.getByText(/Каталог фото- и видеотехники/i)).toBeInTheDocument();
-  // });
+    expect(screen.getByText(/Каталог фото- и видеотехники/i)).toBeInTheDocument();
+  });
 
-  // it('should render Page 404 when user navigate to unknown url', () => {
-  //   history.push('/something');
+  it('should render Product page when user navigate to /cameras/id', () => {
+    history.push(AppRoute.Product);
 
-  //   render(fakeApp);
+    render(fakeApp);
 
-  //   expect(screen.getByText(/404 Страница не найдена/i)).toBeInTheDocument();
-  // });
+    expect(screen.getByText(/Похожие товары/i)).toBeInTheDocument();
+    expect(screen.getByText(/Отзывы/i)).toBeInTheDocument();
+  });
 
-  // it('should render Product page when user navigate to /cameras/id', () => {
-  //   history.push('/cameras/2');
+  it('should render Page 404 when user navigate to unknown url', () => {
+    history.push('/something');
 
-  //   render(fakeApp);
+    render(fakeApp);
 
-  //   expect(screen.getByText(/Похожие товары/i)).toBeInTheDocument();
-  //   expect(screen.getByText(/Отзывы/i)).toBeInTheDocument();
-  // });
+    expect(screen.getByText(/404. Page not found/i)).toBeInTheDocument();
+  });
 });

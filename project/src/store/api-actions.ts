@@ -123,15 +123,15 @@ export const fetchReviews = createAsyncThunk<Review[], string, {
   }
 );
 
-export const postReview = createAsyncThunk<Review[], PostReview, {
+export const postReview = createAsyncThunk<Review, PostReview, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'app/postReview',
-  async ({cameraId, userName, advantage, disadvantage, review, rating}, {dispatch, extra: api}) => {
+  async (review, {dispatch, extra: api}) => {
     try {
-      const {data} = await api.post<Review[]>(`${APIRoute.Reviews}`, {cameraId, userName, advantage, disadvantage, review, rating});
+      const {data} = await api.post<Review>(`${APIRoute.Reviews}`, review);
 
       return data;
     } catch (error) {

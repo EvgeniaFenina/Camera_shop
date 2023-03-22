@@ -20,6 +20,7 @@ function ProductTabs({product}: DescriptionTabsProps): JSX.Element {
           className={cn('tabs__control', isActive && 'is-active')}
           type="button"
           onClick={handleClick}
+          data-testid='characteristic-tab'
         >
             Характеристики
         </button>
@@ -27,6 +28,7 @@ function ProductTabs({product}: DescriptionTabsProps): JSX.Element {
           className={cn('tabs__control', !isActive && 'is-active')}
           type="button"
           onClick={handleClick}
+          data-testid='description-tab'
         >
           Описание
         </button>

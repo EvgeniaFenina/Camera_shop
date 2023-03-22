@@ -1,14 +1,11 @@
 import {generatePath, Link} from 'react-router-dom';
 import {AppRoute} from '../../constants';
-import {useAppSelector} from '../../hooks';
-import {getCurrentPage} from '../../store/app/selectors';
 
 type BreadCrumbsProps = {
   product?: string;
 }
 
 function BreadCrumbs({product}: BreadCrumbsProps): JSX.Element {
-  const currentPage = useAppSelector(getCurrentPage);
 
   return (
     <div className="breadcrumbs">
@@ -32,7 +29,7 @@ function BreadCrumbs({product}: BreadCrumbsProps): JSX.Element {
           {product &&
             <>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={`${AppRoute.Main}${generatePath(AppRoute.Catalog, {page: String(currentPage)})}`}>
+                <Link className="breadcrumbs__link" to={`${AppRoute.Main}${generatePath(AppRoute.Catalog, {page: String(product)})}`}>
                     Каталог
                   <svg width="5" height="8" aria-hidden="true">
                     <use xlinkHref="#icon-arrow-mini"></use>

@@ -1,12 +1,13 @@
-import {useAppSelector} from '../../hooks';
-import {getSimilarCameras} from '../../store/cameras/selectors';
 import {Camera} from '../../types/camera';
 import ProductCard from '../product-card/product-card';
 import {MAX_SLIDER_PRODUCT} from '../../constants';
 import {useEffect, useState} from 'react';
 
-function SimilarSlider(): JSX.Element {
-  const similarProducts = useAppSelector(getSimilarCameras);
+type SimilarSliderProps = {
+  similarProducts: Camera[];
+}
+
+function SimilarSlider({similarProducts}: SimilarSliderProps): JSX.Element {
   const [productNumber, setProductNumber] = useState(0);
 
   const [isActivePreviousButton, setActivePreviousButton] = useState(true);

@@ -8,7 +8,7 @@ import ProductList from '../../components/product-list/product-list';
 import SortForm from '../../components/sort-form/sort-form';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {getCurrentPage} from '../../store/app/selectors';
-import {getCamerasOnPage} from '../../store/cameras/selectors';
+import {getCamerasOnPage, getCamerasStatus} from '../../store/cameras/selectors';
 import {COUNT_CAMERAS_ON_PAGE} from '../../constants';
 import {fetchCamerasOnPage} from '../../store/api-actions';
 import {getAddCartModalStatus} from '../../store/modal/selectors';
@@ -16,6 +16,7 @@ import ModalAddCart from '../../components/modal-add-cart/modal-add-cart';
 
 function CatalogPage(): JSX.Element {
   const camerasOnPage = useAppSelector(getCamerasOnPage);
+  const camerasStatus = useAppSelector(getCamerasStatus);
   const currentPage = useAppSelector(getCurrentPage);
 
   const isModalActive = useAppSelector(getAddCartModalStatus);
@@ -23,11 +24,19 @@ function CatalogPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
     const startIndex = (currentPage - 1) * COUNT_CAMERAS_ON_PAGE;
     const endIndex = startIndex + COUNT_CAMERAS_ON_PAGE;
     dispatch(fetchCamerasOnPage([startIndex, endIndex]));
   }, [currentPage, dispatch]);
+
+  if (camerasStatus.isFailed) {
+    return <p>Сервер недоступен. Перезагрузите, пожалуйста, страницу</p>;
+  }
 
   return (
     <Layout>

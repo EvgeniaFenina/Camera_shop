@@ -7,7 +7,7 @@ import {closeReviewSuccessModal} from '../../store/modal/modal';
 import {getReviewSuccessModalStatus} from '../../store/modal/selectors';
 
 type ModalAddReviewSuccessProps = {
-  cameraId: string;
+  cameraId: number;
 }
 
 function ModalAddReviewSuccess({cameraId}: ModalAddReviewSuccessProps): JSX.Element {
@@ -44,7 +44,7 @@ function ModalAddReviewSuccess({cameraId}: ModalAddReviewSuccessProps): JSX.Elem
       left: 0,
       behavior: 'smooth',
     });
-    dispatch(fetchReviews(cameraId));
+    dispatch(fetchReviews(`${cameraId}`));
   };
 
   const ref = useRef(null);
@@ -52,7 +52,7 @@ function ModalAddReviewSuccess({cameraId}: ModalAddReviewSuccessProps): JSX.Elem
   useOnClickOutside(ref, () => closeModal());
 
   return (
-    <div className="modal is-active modal--narrow" ref={ref}>
+    <div className="modal is-active modal--narrow" ref={ref} data-testid='modalSuccess'>
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content">

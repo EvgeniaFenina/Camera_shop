@@ -7,7 +7,7 @@ import ReviewFrorm from '../../components/review-form/review-form';
 import SimilarSlider from '../../components/similar-slider/similar-slider';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchCurrentCamera, fetchReviews, fetchSimilarCameras} from '../../store/api-actions';
-import {getCurrentCamera, getCurrentCameraStatus} from '../../store/cameras/selectors';
+import {getCurrentCamera, getCurrentCameraStatus, getSimilarCameras} from '../../store/cameras/selectors';
 import {getPriceFormat, getSortReviews} from '../../utils/utils';
 import {ReactComponent as IconFullStar} from '../../assets/sprite/icon-full-star.svg';
 import {ReactComponent as IconStar} from '../../assets/sprite/icon-star.svg';
@@ -29,6 +29,7 @@ function ProductPage(): JSX.Element {
   const currentProductLoadingStatus = useAppSelector(getCurrentCameraStatus);
   const reviews = useAppSelector(getReviews);
   const sortedReviews = reviews.slice().sort(getSortReviews);
+  const similarProducts = useAppSelector(getSimilarCameras);
   const isModalAddReviewActive = useAppSelector(getAddReviewModalStatus);
   const isSuccessModalActive = useAppSelector(getReviewSuccessModalStatus);
   const isModalAddCardActive = useAppSelector(getAddCartModalStatus);
@@ -41,6 +42,10 @@ function ProductPage(): JSX.Element {
       dispatch(fetchReviews(id));
     }
   }, [dispatch, id]);
+
+  if (currentProductLoadingStatus.isFailed) {
+    return <p>Сервер недоступен. Перезагрузите, пожалуйста, страницу</p>;
+  }
 
   if (!currentProduct || currentProductLoadingStatus.isLoading) {
     return <LoadingSpinner />;
@@ -104,10 +109,10 @@ function ProductPage(): JSX.Element {
               </div>
             </section>
           </div>
-          <SimilarSlider />
+          <SimilarSlider similarProducts={similarProducts} />
           <ReviewFrorm reviews={sortedReviews} key={id} />
           {isModalAddReviewActive && <ModalAddReview cameraId={currentProduct.id} />}
-          {isSuccessModalActive && <ModalAddReviewSuccess cameraId={`${currentProduct.id}`} />}
+          {isSuccessModalActive && <ModalAddReviewSuccess cameraId={currentProduct.id} />}
           {isModalAddCardActive && <ModalAddCart />}
         </div>
       </main>

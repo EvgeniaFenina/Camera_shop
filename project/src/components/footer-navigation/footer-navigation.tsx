@@ -1,3 +1,6 @@
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../constants';
+
 function FooterNavigation(): JSX.Element {
   return (
     <ul className="footer__nav">
@@ -5,8 +8,8 @@ function FooterNavigation(): JSX.Element {
         <p className="footer__title">Навигация</p>
         <ul className="footer__list">
           <li className="footer__item">
-            <a className="link" href="/#">Каталог
-            </a>
+            <Link className="link" to={AppRoute.Main}>Каталог
+            </Link>
           </li>
           <li className="footer__item">
             <a className="link" href="/#">Гарантии

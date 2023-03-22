@@ -3,6 +3,7 @@ import {random, name, lorem, date, datatype, commerce, image} from 'faker';
 import {MAX_RATING, MIN_RATING} from '../constants';
 import {Camera} from '../types/camera';
 import {Promo} from '../types/promo';
+import {Notification} from '../types/notification';
 
 export const getRandomInteger = (min: number, max: number): number => {
   const rand = min + Math.random() * (max + 1 - min);
@@ -65,3 +66,11 @@ export const makeFakeNewReview = (): PostReview => ({
   review: lorem.sentences(),
   rating: getRandomInteger(MIN_RATING, MAX_RATING),
 } as PostReview);
+
+export const makeFakeNotification = (): Notification => ({
+  id: random.alphaNumeric(),
+  type: 'error',
+  message: lorem.sentence(),
+  duration: datatype.number(),
+} as Notification);
+

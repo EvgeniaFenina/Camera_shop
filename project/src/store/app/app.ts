@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {NameSpace, START_PAGE, COUNT_CAMERAS_ON_PAGE} from '../../constants';
 import {fetchCameras} from '../api-actions';
 
-type UserAction = {
+export type UserAction = {
   pages: number;
   currentPage: number;
   countCamerasOnPage: number;

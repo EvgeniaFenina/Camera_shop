@@ -72,7 +72,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
   useOnClickOutside(ref, () => closeModal());
 
   return (
-    <div className={cn('modal', isActive && 'is-active')}>
+    <div className={cn('modal', isActive && 'is-active')} data-testid='modalAddReview'>
       <div className="modal__wrapper">
         <div className="modal__overlay"></div>
         <div className="modal__content">
@@ -124,6 +124,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
                       type="text"
                       placeholder="Введите ваше имя"
                       {...register('userName')}
+                      data-testid={'userName'}
                     />
                   </label>
                   {errors?.userName && <p className="custom-input__error">Нужно указать имя</p>}
@@ -139,6 +140,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
                       type="text"
                       placeholder="Основные преимущества товара"
                       {...register('advantage')}
+                      data-testid={'advantage'}
                     />
                   </label>
                   {errors?.advantage && <p className="custom-input__error">Нужно указать достоинства</p>}
@@ -154,6 +156,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
                       type="text"
                       placeholder="Главные недостатки товара"
                       {...register('disadvantage')}
+                      data-testid={'disadvantage'}
                     />
                   </label>
                   {errors?.disadvantage && <p className="custom-input__error">Нужно указать недостатки</p>}
@@ -168,6 +171,7 @@ function ModalAddReview({cameraId}: ModalAddReviewProps): JSX.Element {
                     <textarea
                       placeholder="Поделитесь своим опытом покупки"
                       {...register('review')}
+                      data-testid={'review'}
                     >
                     </textarea>
                   </label>

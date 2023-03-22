@@ -6,6 +6,12 @@ import {createSelector} from '@reduxjs/toolkit';
 export const getCameras = (state: State): Camera[] => state[NameSpace.Cameras].cameras;
 export const getCamerasLoadingStatus = (state: State): FetchStatus => state[NameSpace.Cameras].camerasLoadingStatus;
 
+export const getCamerasStatus = createSelector([getCamerasLoadingStatus], (status) => ({
+  isLoading: status === FetchStatus.LOADING,
+  isSuccess: status === FetchStatus.SUCCESS,
+  isFailed: status === FetchStatus.FAILED
+}));
+
 export const getCamerasOnPage = (state:State): Camera[] => state[NameSpace.Cameras].camerasOnPage;
 
 export const getCurrentCamera = (state: State): Camera | null => state[NameSpace.Cameras].currentCamera;
