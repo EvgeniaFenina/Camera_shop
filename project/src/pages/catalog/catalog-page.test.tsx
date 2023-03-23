@@ -10,7 +10,7 @@ import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {HelmetProvider} from 'react-helmet-async';
 import HistoryRouter from '../../components/history-route/history-route';
-import CatalogPage from './catalog';
+import CatalogPage from './catalog-page';
 
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];

@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {HelmetProvider} from 'react-helmet-async';
 import {BrowserRouter} from 'react-router-dom';
-import Basket from './basket';
+import Basket from './basket-page';
 
 describe('Basket', () => {
 

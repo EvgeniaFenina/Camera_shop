@@ -5,7 +5,7 @@ import {HelmetProvider} from 'react-helmet-async';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import HistoryRouter from '../../components/history-route/history-route';
 import {AppRoute} from '../../constants';
-import NotFoundPage from './not-found';
+import NotFoundPage from './not-found-page';
 
 const history = createMemoryHistory();
 

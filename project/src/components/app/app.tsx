@@ -1,10 +1,10 @@
 import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../constants';
-import CatalogPage from '../../pages/catalog/catalog';
-import ProductPage from '../../pages/product/product';
-import BasketPage from '../../pages/basket/basket';
+import CatalogPage from '../../pages/catalog/catalog-page';
+import ProductPage from '../../pages/product/product-page';
+import BasketPage from '../../pages/basket/basket-page';
 import {HelmetProvider} from 'react-helmet-async';
-import NotFoundPage from '../../pages/not-found/not-found';
+import NotFoundPage from '../../pages/not-found/not-found-page';
 
 function App(): JSX.Element {
   return (
