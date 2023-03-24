@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {generatePath, Link, useParams} from 'react-router-dom';
 import BreadCrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Layout from '../../components/layout/layout';
 import LoadingSpinner from '../../components/loading-spinner/loading-spinner';
@@ -11,7 +11,7 @@ import {getCurrentCamera, getCurrentCameraStatus, getSimilarCameras} from '../..
 import {getPriceFormat, getSortReviews} from '../../utils/utils';
 import {ReactComponent as IconFullStar} from '../../assets/sprite/icon-full-star.svg';
 import {ReactComponent as IconStar} from '../../assets/sprite/icon-star.svg';
-import {MAX_RATING} from '../../constants';
+import {AppRoute, MAX_RATING} from '../../constants';
 import ProductTabs from '../../components/product-tabs/product-tabs';
 import {getReviews} from '../../store/reviews/selectors';
 import ModalAddReview from '../../components/modal-add-review/modal-add-review';
@@ -58,6 +58,15 @@ function ProductPage(): JSX.Element {
     buttonRef.current?.blur();
     dispatch(setActiveCamera({product: currentProduct}));
     dispatch(openAddCartModal());
+  };
+
+  const handleUpButtonClick = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   };
 
   const {name, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price} = currentProduct;
@@ -116,11 +125,11 @@ function ProductPage(): JSX.Element {
           {isModalAddCardActive && <ModalAddCart />}
         </div>
       </main>
-      <a className="up-btn" href="#header">
+      <Link className="up-btn" to={`${generatePath(AppRoute.Product, {id: String(currentProduct.id)})}`} onClick={handleUpButtonClick}>
         <svg width="12" height="18" aria-hidden="true">
           <use xlinkHref="#icon-arrow2"></use>
         </svg>
-      </a>
+      </Link>
     </Layout>
   );
 }
