@@ -140,3 +140,21 @@ export const postReview = createAsyncThunk<Review, PostReview, {
     }
   }
 );
+
+export const fetchSearchResult = createAsyncThunk<Camera[] | undefined, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchSearchResults',
+  async (searchPhrase, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?name_like=${searchPhrase}`);
+
+      return data;
+    } catch (error) {
+      dispatch(pushNotification({type: 'error', message: 'Failed to get search result'}));
+      throw error;
+    }
+  }
+);

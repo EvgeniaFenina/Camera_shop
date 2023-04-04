@@ -22,6 +22,8 @@ describe('Reducer: cameras', () => {
         currentCameraLoadingStatus: FetchStatus.IDLE,
         similarCameras: [],
         similarCamerasLoadingStatus: FetchStatus.IDLE,
+        searchCameras: [],
+        searchLoadingStatus: FetchStatus.IDLE,
       });
   });
   describe('fetch cameras array:', () => {
@@ -35,6 +37,8 @@ describe('Reducer: cameras', () => {
         currentCameraLoadingStatus: FetchStatus.IDLE,
         similarCameras: [],
         similarCamerasLoadingStatus: FetchStatus.IDLE,
+        searchCameras: [],
+        searchLoadingStatus: FetchStatus.IDLE,
       };
       expect(cameras.reducer(state, {type: fetchCameras.fulfilled.type, payload: fakeCameras}))
         .toEqual({
@@ -45,6 +49,8 @@ describe('Reducer: cameras', () => {
           currentCameraLoadingStatus: FetchStatus.IDLE,
           similarCameras: [],
           similarCamerasLoadingStatus: FetchStatus.IDLE,
+          searchCameras: [],
+          searchLoadingStatus: FetchStatus.IDLE,
         });
     });
 
@@ -57,6 +63,8 @@ describe('Reducer: cameras', () => {
         currentCameraLoadingStatus: FetchStatus.IDLE,
         similarCameras: [],
         similarCamerasLoadingStatus: FetchStatus.IDLE,
+        searchCameras: [],
+        searchLoadingStatus: FetchStatus.IDLE,
       };
       expect(cameras.reducer(state, {type: fetchCameras.rejected.type}))
         .toEqual({
@@ -67,6 +75,8 @@ describe('Reducer: cameras', () => {
           currentCameraLoadingStatus: FetchStatus.IDLE,
           similarCameras: [],
           similarCamerasLoadingStatus: FetchStatus.IDLE,
+          searchCameras: [],
+          searchLoadingStatus: FetchStatus.IDLE,
         });
     });
 
@@ -79,6 +89,8 @@ describe('Reducer: cameras', () => {
         currentCameraLoadingStatus: FetchStatus.IDLE,
         similarCameras: [],
         similarCamerasLoadingStatus: FetchStatus.IDLE,
+        searchCameras: [],
+        searchLoadingStatus: FetchStatus.IDLE,
       };
       expect(cameras.reducer(state, {type: fetchCameras.pending.type}))
         .toEqual({
@@ -89,6 +101,8 @@ describe('Reducer: cameras', () => {
           currentCameraLoadingStatus: FetchStatus.IDLE,
           similarCameras: [],
           similarCamerasLoadingStatus: FetchStatus.IDLE,
+          searchCameras: [],
+          searchLoadingStatus: FetchStatus.IDLE,
         });
     });
   });
@@ -104,6 +118,8 @@ describe('Reducer: cameras', () => {
         currentCameraLoadingStatus: FetchStatus.IDLE,
         similarCameras: [],
         similarCamerasLoadingStatus: FetchStatus.IDLE,
+        searchCameras: [],
+        searchLoadingStatus: FetchStatus.IDLE,
       };
       expect(cameras.reducer(state, {type: fetchCurrentCamera.rejected.type}))
         .toEqual({
@@ -114,6 +130,8 @@ describe('Reducer: cameras', () => {
           currentCameraLoadingStatus: FetchStatus.FAILED,
           similarCameras: [],
           similarCamerasLoadingStatus: FetchStatus.IDLE,
+          searchCameras: [],
+          searchLoadingStatus: FetchStatus.IDLE,
         });
     });
 
@@ -126,6 +144,8 @@ describe('Reducer: cameras', () => {
         currentCameraLoadingStatus: FetchStatus.IDLE,
         similarCameras: [],
         similarCamerasLoadingStatus: FetchStatus.IDLE,
+        searchCameras: [],
+        searchLoadingStatus: FetchStatus.IDLE,
       };
       expect(cameras.reducer(state, {type: fetchCurrentCamera.pending.type}))
         .toEqual({
@@ -136,6 +156,8 @@ describe('Reducer: cameras', () => {
           currentCameraLoadingStatus: FetchStatus.LOADING,
           similarCameras: [],
           similarCamerasLoadingStatus: FetchStatus.IDLE,
+          searchCameras: [],
+          searchLoadingStatus: FetchStatus.IDLE,
         });
     });
 
@@ -148,6 +170,8 @@ describe('Reducer: cameras', () => {
         currentCameraLoadingStatus: FetchStatus.IDLE,
         similarCameras: [],
         similarCamerasLoadingStatus: FetchStatus.IDLE,
+        searchCameras: [],
+        searchLoadingStatus: FetchStatus.IDLE,
       };
       expect(cameras.reducer(state, {type: fetchCurrentCamera.fulfilled.type, payload: fakeCurrentCamera}))
         .toEqual({
@@ -158,6 +182,8 @@ describe('Reducer: cameras', () => {
           currentCameraLoadingStatus: FetchStatus.SUCCESS,
           similarCameras: [],
           similarCamerasLoadingStatus: FetchStatus.IDLE,
+          searchCameras: [],
+          searchLoadingStatus: FetchStatus.IDLE,
         });
     });
   });
@@ -173,6 +199,8 @@ describe('Reducer: cameras', () => {
         currentCameraLoadingStatus: FetchStatus.IDLE,
         similarCameras: [],
         similarCamerasLoadingStatus: FetchStatus.IDLE,
+        searchCameras: [],
+        searchLoadingStatus: FetchStatus.IDLE,
       };
       expect(cameras.reducer(state, {type: fetchSimilarCameras.rejected.type}))
         .toEqual({
@@ -183,6 +211,8 @@ describe('Reducer: cameras', () => {
           currentCameraLoadingStatus: FetchStatus.IDLE,
           similarCameras: [],
           similarCamerasLoadingStatus: FetchStatus.FAILED,
+          searchCameras: [],
+          searchLoadingStatus: FetchStatus.IDLE,
         });
     });
 
@@ -195,6 +225,8 @@ describe('Reducer: cameras', () => {
         currentCameraLoadingStatus: FetchStatus.IDLE,
         similarCameras: [],
         similarCamerasLoadingStatus: FetchStatus.IDLE,
+        searchCameras: [],
+        searchLoadingStatus: FetchStatus.IDLE,
       };
       expect(cameras.reducer(state, {type: fetchSimilarCameras.pending.type}))
         .toEqual({
@@ -205,6 +237,8 @@ describe('Reducer: cameras', () => {
           currentCameraLoadingStatus: FetchStatus.IDLE,
           similarCameras: [],
           similarCamerasLoadingStatus: FetchStatus.LOADING,
+          searchCameras: [],
+          searchLoadingStatus: FetchStatus.IDLE,
         });
     });
 
@@ -217,6 +251,8 @@ describe('Reducer: cameras', () => {
         currentCameraLoadingStatus: FetchStatus.IDLE,
         similarCameras: [],
         similarCamerasLoadingStatus: FetchStatus.IDLE,
+        searchCameras: [],
+        searchLoadingStatus: FetchStatus.IDLE,
       };
       expect(cameras.reducer(state, {type: fetchSimilarCameras.fulfilled.type, payload: fakeCameras}))
         .toEqual({
@@ -227,6 +263,8 @@ describe('Reducer: cameras', () => {
           currentCameraLoadingStatus: FetchStatus.IDLE,
           similarCameras: fakeCameras,
           similarCamerasLoadingStatus: FetchStatus.SUCCESS,
+          searchCameras: [],
+          searchLoadingStatus: FetchStatus.IDLE,
         });
     });
   });

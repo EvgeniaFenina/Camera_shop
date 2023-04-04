@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, FetchStatus} from '../../constants';
-import {fetchCameras, fetchCamerasOnPage, fetchCurrentCamera, fetchSimilarCameras} from '../api-actions';
+import {fetchCameras, fetchCamerasOnPage, fetchCurrentCamera, fetchSimilarCameras, fetchSearchResult} from '../api-actions';
 import {Camera} from '../../types/camera';
 
 type CamerasData = {
@@ -11,6 +11,8 @@ type CamerasData = {
   currentCameraLoadingStatus: FetchStatus;
   similarCameras: Camera[];
   similarCamerasLoadingStatus: FetchStatus;
+  searchCameras: Camera[] | undefined;
+  searchLoadingStatus: FetchStatus;
 };
 
 const initialState: CamerasData = {
@@ -20,13 +22,19 @@ const initialState: CamerasData = {
   currentCamera: null,
   currentCameraLoadingStatus: FetchStatus.IDLE,
   similarCameras: [],
-  similarCamerasLoadingStatus: FetchStatus.IDLE
+  similarCamerasLoadingStatus: FetchStatus.IDLE,
+  searchCameras: [],
+  searchLoadingStatus: FetchStatus.IDLE
 };
 
 export const cameras = createSlice({
   name: NameSpace.Cameras,
   initialState,
-  reducers: {},
+  reducers: {
+    clearSearchCameras: (state) => {
+      state.searchCameras = [];
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCameras.pending, (state) => {
@@ -61,6 +69,20 @@ export const cameras = createSlice({
       })
       .addCase(fetchSimilarCameras.rejected, (state) => {
         state.similarCamerasLoadingStatus = FetchStatus.FAILED;
+      })
+      .addCase(fetchSearchResult.pending, (state) => {
+        state.searchCameras = [];
+        state.searchLoadingStatus = FetchStatus.LOADING;
+      })
+      .addCase(fetchSearchResult.fulfilled, (state, action) => {
+        state.searchCameras = action.payload;
+        state.searchLoadingStatus = FetchStatus.SUCCESS;
+      })
+      .addCase(fetchSearchResult.rejected, (state) => {
+        state.searchCameras = undefined;
+        state.searchLoadingStatus = FetchStatus.FAILED;
       });
   }
 });
+
+export const {clearSearchCameras} = cameras.actions;

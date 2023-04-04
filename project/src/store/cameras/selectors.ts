@@ -27,3 +27,11 @@ export const getCurrentCameraStatus = createSelector([getCurrentCameraLoadingSta
 export const getSimilarCameras = (state: State): Camera[] => state[NameSpace.Cameras].similarCameras;
 export const getSimilarCamerasLoadingStatus = (state: State): FetchStatus => state[NameSpace.Cameras].similarCamerasLoadingStatus;
 
+export const getSearchCameras = (state: State): Camera[] | undefined => state[NameSpace.Cameras].searchCameras;
+export const getSearchCamerasLoadingStatus = (state: State): FetchStatus => state[NameSpace.Cameras].searchLoadingStatus;
+
+export const getSearchCameraStatus = createSelector([getSearchCamerasLoadingStatus], (status) => ({
+  isLoading: status === FetchStatus.LOADING,
+  isSuccess: status === FetchStatus.SUCCESS,
+  isFailed: status === FetchStatus.FAILED
+}));
