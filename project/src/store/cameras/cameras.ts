@@ -1,7 +1,16 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, FetchStatus} from '../../constants';
-import {fetchCameras, fetchCamerasOnPage, fetchCurrentCamera, fetchSimilarCameras, fetchSearchResult} from '../api-actions';
 import {Camera} from '../../types/camera';
+import {
+  fetchCameras,
+  fetchCamerasOnPage,
+  fetchCurrentCamera,
+  fetchSimilarCameras,
+  fetchSearchResult,
+  fetchSortCameras,
+  fetchSortCamerasOnPage
+} from '../api-actions';
+
 
 type CamerasData = {
   cameras: Camera[];
@@ -13,6 +22,9 @@ type CamerasData = {
   similarCamerasLoadingStatus: FetchStatus;
   searchCameras: Camera[] | undefined;
   searchLoadingStatus: FetchStatus;
+  sortCameras: Camera[];
+  sortCamerasLoadingStatus: FetchStatus;
+  sortCamerasOnPage: Camera[];
 };
 
 const initialState: CamerasData = {
@@ -24,7 +36,10 @@ const initialState: CamerasData = {
   similarCameras: [],
   similarCamerasLoadingStatus: FetchStatus.IDLE,
   searchCameras: [],
-  searchLoadingStatus: FetchStatus.IDLE
+  searchLoadingStatus: FetchStatus.IDLE,
+  sortCameras: [],
+  sortCamerasLoadingStatus: FetchStatus.IDLE,
+  sortCamerasOnPage: []
 };
 
 export const cameras = createSlice({
@@ -81,6 +96,19 @@ export const cameras = createSlice({
       .addCase(fetchSearchResult.rejected, (state) => {
         state.searchCameras = undefined;
         state.searchLoadingStatus = FetchStatus.FAILED;
+      })
+      .addCase(fetchSortCameras.pending, (state) => {
+        state.sortCamerasLoadingStatus = FetchStatus.LOADING;
+      })
+      .addCase(fetchSortCameras.fulfilled, (state, action) => {
+        state.sortCameras = action.payload;
+        state.sortCamerasLoadingStatus = FetchStatus.SUCCESS;
+      })
+      .addCase(fetchSortCameras.rejected, (state) => {
+        state.sortCamerasLoadingStatus = FetchStatus.FAILED;
+      })
+      .addCase(fetchSortCamerasOnPage.fulfilled, (state, action) => {
+        state.sortCamerasOnPage = action.payload;
       });
   }
 });

@@ -46,7 +46,7 @@ export const fetchPromo = createAsyncThunk<Promo, undefined, {
   }
 );
 
-export const fetchCamerasOnPage = createAsyncThunk<Camera[],[number, number], {
+export const fetchCamerasOnPage = createAsyncThunk<Camera[], [number, number], {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -154,6 +154,42 @@ export const fetchSearchResult = createAsyncThunk<Camera[] | undefined, string, 
       return data;
     } catch (error) {
       dispatch(pushNotification({type: 'error', message: 'Failed to get search result'}));
+      throw error;
+    }
+  }
+);
+
+export const fetchSortCameras = createAsyncThunk<Camera[], [string, string], {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchSortCameras',
+  async ([sortType, sortOrder], {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?_sort=${sortType}&_order=${sortOrder}`);
+
+      return data;
+    } catch (error) {
+      dispatch(pushNotification({type: 'error', message: 'Failed to get sort cameras'}));
+      throw error;
+    }
+  }
+);
+
+export const fetchSortCamerasOnPage = createAsyncThunk<Camera[], [string, string, number, number], {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchSortCamerasOnPage',
+  async ([sortType, sortOrder, start, end], {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?_sort=${sortType}&_order=${sortOrder}&_start=${start}&_end=${end}`);
+
+      return data;
+    } catch (error) {
+      dispatch(pushNotification({type: 'error', message: 'Failed to get sort cameras on page'}));
       throw error;
     }
   }

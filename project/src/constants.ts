@@ -52,5 +52,3 @@ export const MAX_REVIEWS_ON_PAGE = 3;
 export const STOP_SCROLL_CLASS = 'scroll-lock';
 
 export const DEFAUTT_DURATION = 4000;
-
-

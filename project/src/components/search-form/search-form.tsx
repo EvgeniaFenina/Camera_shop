@@ -5,15 +5,11 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {fetchSearchResult} from '../../store/api-actions';
 import {clearSearchCameras} from '../../store/cameras/cameras';
 import {getSearchCameras} from '../../store/cameras/selectors';
-// import {getSearchCameras, getSearchCameraStatus} from '../../store/cameras/selectors';
-// import LoadingSpinner from '../loading-spinner/loading-spinner';
-
 
 function SearchForm(): JSX.Element {
   const dispatch = useAppDispatch();
   const [searchPhrase, setSearchPhrase] = useState('');
   const searchResultList = useAppSelector(getSearchCameras);
-  // const searchStatus = useAppSelector(getSearchCameraStatus);
 
   useEffect(() => {
     searchPhrase.length > 0 ? dispatch(fetchSearchResult(searchPhrase)) : dispatch(clearSearchCameras);
