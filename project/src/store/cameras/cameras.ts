@@ -3,43 +3,37 @@ import {NameSpace, FetchStatus} from '../../constants';
 import {Camera} from '../../types/camera';
 import {
   fetchCameras,
-  fetchCamerasOnPage,
   fetchCurrentCamera,
   fetchSimilarCameras,
   fetchSearchResult,
-  fetchSortCameras,
-  fetchSortCamerasOnPage
+  fetchCamerasOnPage,
 } from '../api-actions';
 
 
 type CamerasData = {
   cameras: Camera[];
   camerasLoadingStatus: FetchStatus;
-  camerasOnPage: Camera[];
   currentCamera: Camera | null;
   currentCameraLoadingStatus: FetchStatus;
   similarCameras: Camera[];
   similarCamerasLoadingStatus: FetchStatus;
   searchCameras: Camera[] | undefined;
   searchLoadingStatus: FetchStatus;
-  sortCameras: Camera[];
-  sortCamerasLoadingStatus: FetchStatus;
-  sortCamerasOnPage: Camera[];
+  filteredCameras: Camera[];
+  filteredCamerasLoadingStatus: FetchStatus;
 };
 
 const initialState: CamerasData = {
   cameras: [],
   camerasLoadingStatus: FetchStatus.IDLE,
-  camerasOnPage: [],
   currentCamera: null,
   currentCameraLoadingStatus: FetchStatus.IDLE,
   similarCameras: [],
   similarCamerasLoadingStatus: FetchStatus.IDLE,
   searchCameras: [],
   searchLoadingStatus: FetchStatus.IDLE,
-  sortCameras: [],
-  sortCamerasLoadingStatus: FetchStatus.IDLE,
-  sortCamerasOnPage: []
+  filteredCameras: [],
+  filteredCamerasLoadingStatus: FetchStatus.IDLE,
 };
 
 export const cameras = createSlice({
@@ -62,9 +56,9 @@ export const cameras = createSlice({
       .addCase(fetchCameras.rejected, (state) => {
         state.camerasLoadingStatus = FetchStatus.FAILED;
       })
-      .addCase(fetchCamerasOnPage.fulfilled, (state, action) => {
-        state.camerasOnPage = action.payload;
-      })
+      // .addCase(fetchCamerasOnPage.fulfilled, (state, action) => {
+      //   state.camerasOnPage = action.payload;
+      // })
       .addCase(fetchCurrentCamera.pending, (state) => {
         state.currentCameraLoadingStatus = FetchStatus.LOADING;
       })
@@ -97,18 +91,15 @@ export const cameras = createSlice({
         state.searchCameras = undefined;
         state.searchLoadingStatus = FetchStatus.FAILED;
       })
-      .addCase(fetchSortCameras.pending, (state) => {
-        state.sortCamerasLoadingStatus = FetchStatus.LOADING;
+      .addCase(fetchCamerasOnPage.pending, (state) => {
+        state.filteredCamerasLoadingStatus = FetchStatus.LOADING;
       })
-      .addCase(fetchSortCameras.fulfilled, (state, action) => {
-        state.sortCameras = action.payload;
-        state.sortCamerasLoadingStatus = FetchStatus.SUCCESS;
+      .addCase(fetchCamerasOnPage.fulfilled, (state, action) => {
+        state.filteredCameras = action.payload;
+        state.filteredCamerasLoadingStatus = FetchStatus.SUCCESS;
       })
-      .addCase(fetchSortCameras.rejected, (state) => {
-        state.sortCamerasLoadingStatus = FetchStatus.FAILED;
-      })
-      .addCase(fetchSortCamerasOnPage.fulfilled, (state, action) => {
-        state.sortCamerasOnPage = action.payload;
+      .addCase(fetchCamerasOnPage.rejected, (state) => {
+        state.filteredCamerasLoadingStatus = FetchStatus.FAILED;
       });
   }
 });

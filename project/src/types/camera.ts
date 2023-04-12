@@ -14,3 +14,25 @@ export type Camera = {
   previewImgWebp2x: string;
   reviewCount: number;
 };
+
+export type FetchCameraPayloadType = {
+  params: {
+    sort: string | null;
+    order : string | null;
+    category: string | null | string[];
+    level: string | null | string[];
+    type: string | null | string[];
+    maxPrice: number | null;
+    minPrice: number | null;
+    startPage: number;
+    endPage: number;
+  };
+};
+
+export type FetchCameraMinMaxPricePayloadType = {
+  params: {
+    category: string | null | string[];
+    level: string | null | string[];
+    type: string | null | string[];
+  };
+};

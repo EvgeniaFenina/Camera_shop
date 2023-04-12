@@ -1,14 +1,14 @@
 import {AxiosError, AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
-import {Camera} from '../types/camera';
+import {Camera, FetchCameraMinMaxPricePayloadType, FetchCameraPayloadType} from '../types/camera';
 import {APIRoute, AppRoute} from '../constants';
 import {pushNotification} from './notifications/notifications';
 import {Promo} from '../types/promo.js';
 import {StatusCodes} from 'http-status-codes';
 import {redirectToRoute} from './action';
 import {Review, PostReview} from '../types/review.js';
-
+import {setPagesCount} from './app/app';
 
 export const fetchCameras = createAsyncThunk<Camera[], undefined, {
   dispatch: AppDispatch;
@@ -46,23 +46,6 @@ export const fetchPromo = createAsyncThunk<Promo, undefined, {
   }
 );
 
-export const fetchCamerasOnPage = createAsyncThunk<Camera[], [number, number], {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'data/fetchCamerasOnPage',
-  async ([start, end], {dispatch, extra: api}) => {
-    try {
-      const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?_start=${start}&_end=${end}`);
-
-      return data;
-    } catch (error) {
-      dispatch(pushNotification({type: 'error', message: 'Failed to get cameras on page'}));
-      throw error;
-    }
-  }
-);
 
 export const fetchCurrentCamera = createAsyncThunk<Camera, string, {
   dispatch: AppDispatch;
@@ -159,37 +142,61 @@ export const fetchSearchResult = createAsyncThunk<Camera[] | undefined, string, 
   }
 );
 
-export const fetchSortCameras = createAsyncThunk<Camera[], [string, string], {
+export const fetchCamerasOnPage = createAsyncThunk<Camera[], FetchCameraPayloadType, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/fetchSortCameras',
-  async ([sortType, sortOrder], {dispatch, extra: api}) => {
+  'data/fetchFilteredCamerasOnPage',
+  async ({params}, {dispatch, extra: api}) => {
+    const {category, level, type, minPrice, maxPrice, sort, order, startPage, endPage} = params;
     try {
-      const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?_sort=${sortType}&_order=${sortOrder}`);
+      const {data, headers} = await api.get<Camera[]>(APIRoute.Cameras, {
+        params: {
+          'category': category,
+          'level': level,
+          'type': type,
+          'price_gte': minPrice,
+          'price_lte': maxPrice,
+          '_sort': sort,
+          '_order': order,
+          '_start': startPage,
+          '_end': endPage
+        }
+      });
+
+      const camerasCount = Number(headers['x-total-count']);
+
+      dispatch(setPagesCount({camerasCount}));
 
       return data;
     } catch (error) {
-      dispatch(pushNotification({type: 'error', message: 'Failed to get sort cameras'}));
+      dispatch(pushNotification({type: 'error', message: 'Failed to get filtered cameras on page'}));
       throw error;
     }
   }
 );
 
-export const fetchSortCamerasOnPage = createAsyncThunk<Camera[], [string, string, number, number], {
+export const fetchFilteredCamerasMinMaxPrice = createAsyncThunk<Camera[], FetchCameraMinMaxPricePayloadType, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/fetchSortCamerasOnPage',
-  async ([sortType, sortOrder, start, end], {dispatch, extra: api}) => {
+  'data/fetchFilteredCamerasMinMaxPrice',
+  async ({params}, {dispatch, extra: api}) => {
+    const {category, level, type} = params;
     try {
-      const {data} = await api.get<Camera[]>(`${APIRoute.Cameras}?_sort=${sortType}&_order=${sortOrder}&_start=${start}&_end=${end}`);
+      const {data} = await api.get<Camera[]>(APIRoute.Cameras, {
+        params: {
+          'category': category,
+          'level': level,
+          'type': type,
+        }
+      });
 
       return data;
     } catch (error) {
-      dispatch(pushNotification({type: 'error', message: 'Failed to get sort cameras on page'}));
+      dispatch(pushNotification({type: 'error', message: 'Failed to get filtered cameras on page'}));
       throw error;
     }
   }

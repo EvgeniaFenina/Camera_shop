@@ -1,8 +1,7 @@
-import {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {fetchSortCameras} from '../../store/api-actions';
 import {changeSortType, changeSortOrder, changePage} from '../../store/app/app';
 import {getCurrentPage, getCurrentSortOrder, getCurrentSortType} from '../../store/app/selectors';
+import {SortByOrderServerValue, SORT_BY_ORDER, SortByTypeServerValue, SORT_BY_TYPE, START_PAGE} from '../../constants';
 
 function SortForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -11,15 +10,9 @@ function SortForm(): JSX.Element {
   const currentSortOrder = useAppSelector(getCurrentSortOrder);
   const currentPage = useAppSelector(getCurrentPage);
 
-  useEffect(() => {
-    if (currentSortType !== '' && currentSortOrder !== '') {
-      dispatch(fetchSortCameras([currentSortType, currentSortOrder]));
-    }
-  }, [currentSortType, currentSortOrder, dispatch]);
-
-  const handleSortButtonClick = (sortType?: string, sortOrder?: string) => {
+  const handleSortButtonClick = (sortType?: string | null, sortOrder?: string | null) => {
     if (!sortType && !currentSortType) {
-      sortType = 'price';
+      sortType = SortByTypeServerValue.Price;
     }
     if (!sortType) {
       sortType = currentSortType;
@@ -27,15 +20,15 @@ function SortForm(): JSX.Element {
     dispatch(changeSortType({sortType}));
 
     if (!sortOrder && !currentSortOrder) {
-      sortOrder = 'asc';
+      sortOrder = SortByOrderServerValue.OrderUp;
     }
     if (!sortOrder) {
       sortOrder = currentSortOrder;
     }
     dispatch(changeSortOrder({sortOrder}));
 
-    if (currentPage > 1) {
-      dispatch(changePage({page : 1}));
+    if (currentPage > START_PAGE) {
+      dispatch(changePage({page: START_PAGE}));
     }
   };
 
@@ -45,57 +38,39 @@ function SortForm(): JSX.Element {
         <div className="catalog-sort__inner">
           <p className="title title--h5">Сортировать:</p>
           <div className="catalog-sort__type">
-            <div className="catalog-sort__btn-text">
-              <input
-                type="radio"
-                id="sortPrice"
-                name="sort"
-                onClick={() => handleSortButtonClick('price')}
-                checked={currentSortType === 'price'}
-              />
-              <label htmlFor="sortPrice">по цене</label>
-            </div>
-            <div className="catalog-sort__btn-text">
-              <input
-                type="radio"
-                id="sortPopular"
-                name="sort"
-                onClick={() => handleSortButtonClick('rating')}
-                checked={currentSortType === 'rating'}
-              />
-              <label htmlFor="sortPopular">по популярности</label>
-            </div>
+            {SORT_BY_TYPE.map(({title, id, value}) => (
+              <div className="catalog-sort__btn-text" key={id}>
+                <input
+                  type="radio"
+                  id={id}
+                  name="sort"
+                  data-value={value}
+                  checked={value === currentSortType}
+                  onChange={() => handleSortButtonClick(value)}
+                />
+                <label htmlFor={id}>{title}</label>
+              </div>
+            ))}
           </div>
           <div className="catalog-sort__order">
-            <div className="catalog-sort__btn catalog-sort__btn--up">
-              <input type="radio"
-                id="up"
-                name="sort-icon"
-                aria-label="По возрастанию"
-                onClick={() => handleSortButtonClick('','asc')}
-                checked={currentSortOrder === 'asc'}
-              />
-              <label htmlFor="up">
-                <svg width="16" height="14" aria-hidden="true">
-                  <use xlinkHref="#icon-sort"></use>
-                </svg>
-              </label>
-            </div>
-            <div className="catalog-sort__btn catalog-sort__btn--down">
-              <input
-                type="radio"
-                id="down"
-                name="sort-icon"
-                aria-label="По убыванию"
-                onClick={() => handleSortButtonClick('','desc')}
-                checked={currentSortOrder === 'desc'}
-              />
-              <label htmlFor="down">
-                <svg width="16" height="14" aria-hidden="true">
-                  <use xlinkHref="#icon-sort"></use>
-                </svg>
-              </label>
-            </div>
+            {SORT_BY_ORDER.map(({title, id, value}) => (
+              <div className={`catalog-sort__btn catalog-sort__btn--${id}`} key={id}>
+                <input
+                  type="radio"
+                  id={id}
+                  name="sort-icon"
+                  aria-label={title}
+                  data-value={value}
+                  checked={value === currentSortOrder}
+                  onChange={() => handleSortButtonClick('', value)}
+                />
+                <label htmlFor={id}>
+                  <svg width={16} height={14} aria-hidden="true">
+                    <use xlinkHref="#icon-sort" />
+                  </svg>
+                </label>
+              </div>
+            ))}
           </div>
         </div>
       </form>

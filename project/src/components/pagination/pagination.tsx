@@ -17,6 +17,12 @@ function Pagination(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleClick = (page: number) => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+
     dispatch(changePage({page}));
   };
 

@@ -12,8 +12,6 @@ export const getCamerasStatus = createSelector([getCamerasLoadingStatus], (statu
   isFailed: status === FetchStatus.FAILED
 }));
 
-export const getCamerasOnPage = (state: State): Camera[] => state[NameSpace.Cameras].camerasOnPage;
-
 export const getCurrentCamera = (state: State): Camera | null => state[NameSpace.Cameras].currentCamera;
 export const getCurrentCameraLoadingStatus = (state: State): FetchStatus => state[NameSpace.Cameras].currentCameraLoadingStatus;
 
@@ -35,12 +33,10 @@ export const getSearchCameraStatus = createSelector([getSearchCamerasLoadingStat
   isFailed: status === FetchStatus.FAILED
 }));
 
-export const getSortCameras = (state: State): Camera[] => state[NameSpace.Cameras].sortCameras;
-export const getSortCamerasLoadingStatus = (state: State): FetchStatus => state[NameSpace.Cameras].sortCamerasLoadingStatus;
+export const getCamerasOnPage = (state: State): Camera[] => state[NameSpace.Cameras].filteredCameras;
+export const getCamerasOnPageLoadingStatus = (state: State): FetchStatus => state[NameSpace.Cameras].filteredCamerasLoadingStatus;
 
-export const getSortCamerasOnPage = (state:State): Camera[] => state[NameSpace.Cameras].sortCamerasOnPage;
-
-export const getSortCameraStatus = createSelector([getSortCamerasLoadingStatus], (status) => ({
+export const getCamerasOnPageStatus = createSelector([getCamerasOnPageLoadingStatus], (status) => ({
   isLoading: status === FetchStatus.LOADING,
   isSuccess: status === FetchStatus.SUCCESS,
   isFailed: status === FetchStatus.FAILED
